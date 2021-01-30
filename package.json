@@ -1,0 +1,43 @@
+{
+  "name": "route-meister",
+  "version": "0.0.1",
+  "description": "Simple, lightweight router written to be used with web components. Supports lazy loading.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --collectCoverage",
+    "test-watch": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mishotek/route-meister.git"
+  },
+  "keywords": [
+    "router",
+    "web-components",
+    "components",
+    "html",
+    "route",
+    "lazy"
+  ],
+  "author": "Mikheil Tektumanidze",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mishotek/route-meister/issues"
+  },
+  "homepage": "https://github.com/mishotek/route-meister#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-typescript": "^7.12.7",
+    "@types/jest": "^26.0.20",
+    "@typescript-eslint/eslint-plugin": "^4.14.1",
+    "@typescript-eslint/parser": "^4.14.1",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.18.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "jest": "^26.6.3",
+    "typescript": "^4.1.3",
+    "eslint-plugin-jest": "^24.1.3"
+  }
+}
