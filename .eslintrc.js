@@ -27,5 +27,6 @@ module.exports = {
         'no-empty-function': 0,
         'no-useless-constructor': 0,
         'no-unused-vars': ['error', { args: 'none' }],
+        'class-methods-use-this': 0,
     },
 };
