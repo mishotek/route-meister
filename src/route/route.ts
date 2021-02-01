@@ -46,7 +46,7 @@ export class Route {
         const fragmentedUrl = this.urlToFragments(cleanUrl);
 
         const joinFragments = (patternFragment, index) => [patternFragment, fragmentedUrl[index]];
-        const isParamFragmentTuple = ([patternFragment]) => patternFragment.isParamFragment;
+        const isFragmentTupleParam = ([patternFragment]) => patternFragment.isParamFragment;
         const fragmentTupleReducer = (obj, [patternFragment, urlFragment]) => ({
             ...obj,
             [this.paramFragmentToParam(patternFragment)]: urlFragment.fragmentStr,
@@ -54,7 +54,7 @@ export class Route {
 
         return this.fragmentedPattern
             .map(joinFragments)
-            .filter(isParamFragmentTuple)
+            .filter(isFragmentTupleParam)
             .reduce(fragmentTupleReducer, {});
     }
 

@@ -20,6 +20,7 @@ describe('Route tests', () => {
     });
 
     test('Should not create route without pattern', () => {
+        // @ts-ignore
         expect(() => new Route()).toThrow(Error);
     });
 
