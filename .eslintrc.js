@@ -28,5 +28,6 @@ module.exports = {
         'no-useless-constructor': 0,
         'no-unused-vars': ['error', { args: 'none' }],
         'class-methods-use-this': 0,
+        'no-underscore-dangle': 0,
     },
 };

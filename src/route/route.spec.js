@@ -52,8 +52,8 @@ describe('Route tests', () => {
     });
 
     test('Should not match when route is prefix of url, but exact is set to true', () => {
-        const route = new Route('/my-route');
-        expect(route.matches('/my-route/more', true)).toBeFalsy();
+        const route = new Route('/my-route', true);
+        expect(route.matches('/my-route/more')).toBeFalsy();
     });
 
     test('Should match route with params', () => {

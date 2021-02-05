@@ -1,13 +1,11 @@
 import { RouteFragment } from './route-fragment';
 
 export class Route {
-    private readonly PATTERN_REGEX = /^\/[0-9a-zA-Z-/:]*$/;
+    get PATTERN_REGEX() {
+        return /^\/[0-9a-zA-Z-/:]*$/;
+    }
 
-    private readonly pattern: string;
-
-    private readonly fragmentedPattern: Array<RouteFragment>;
-
-    constructor(pattern: string) {
+    constructor(pattern, exact = false) {
         if (typeof pattern !== 'string') {
             throw new Error('Pattern must be a string');
         }
@@ -21,55 +19,56 @@ export class Route {
             throw new Error('Pattern must start with "/" and can include only chars (A-Z, a-z), digits (0-9), "/", ":" and "-');
         }
 
-        this.pattern = cleanPattern;
-        this.fragmentedPattern = this.urlToFragments(this.pattern);
+        this._fragmentedPattern = this._urlToFragments(cleanPattern);
+        this.exact = exact;
     }
 
-    matches(url: string, exact = false): boolean {
-        const cleanUrl = this.cleanUrl(url);
-        const fragmentedUrl = this.urlToFragments(cleanUrl);
+    matches(pathname) {
+        const cleanPathname = this.cleanUrl(pathname);
+        const fragmentedPathname = this._urlToFragments(cleanPathname);
 
-        const validUrlLength = (exact && this.fragmentedPattern.length === fragmentedUrl.length)
-            || (!exact && this.fragmentedPattern.length <= fragmentedUrl.length);
+        // eslint-disable-next-line max-len
+        const validUrlLength = (this.exact && this._fragmentedPattern.length === fragmentedPathname.length)
+            || (!this.exact && this._fragmentedPattern.length <= fragmentedPathname.length);
 
         if (!validUrlLength) {
             return false;
         }
 
-        return this.fragmentedPattern
-            .map((patternFragment, index) => patternFragment.matches(fragmentedUrl[index]))
+        return this._fragmentedPattern
+            .map((patternFragment, index) => patternFragment.matches(fragmentedPathname[index]))
             .every((isMatching) => isMatching);
     }
 
-    extractParams(url: string): object {
+    extractParams(url) {
         const cleanUrl = this.cleanUrl(url);
-        const fragmentedUrl = this.urlToFragments(cleanUrl);
+        const fragmentedUrl = this._urlToFragments(cleanUrl);
 
         const joinFragments = (patternFragment, index) => [patternFragment, fragmentedUrl[index]];
         const isFragmentTupleParam = ([patternFragment]) => patternFragment.isParamFragment;
         const fragmentTupleReducer = (obj, [patternFragment, urlFragment]) => ({
             ...obj,
-            [this.paramFragmentToParam(patternFragment)]: urlFragment.fragmentStr,
+            [this._paramFragmentToParam(patternFragment)]: urlFragment.fragmentStr,
         });
 
-        return this.fragmentedPattern
+        return this._fragmentedPattern
             .map(joinFragments)
             .filter(isFragmentTupleParam)
             .reduce(fragmentTupleReducer, {});
     }
 
-    cleanUrl(url: string): string {
+    cleanUrl(url) {
         return url
             .trim()
             .split('#')[0]
             .split('?')[0];
     }
 
-    private paramFragmentToParam(fragment: RouteFragment): string {
+    _paramFragmentToParam(fragment) {
         return fragment.fragmentStr.replace(':', '');
     }
 
-    private urlToFragments(url: string): Array<RouteFragment> {
+    _urlToFragments(url) {
         return url
             .split('/')
             .filter((fragmentStr) => !!fragmentStr)

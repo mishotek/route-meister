@@ -1,11 +1,10 @@
 export class RouteFragment {
-    public readonly isParamFragment: boolean;
-
-    constructor(public fragmentStr: string) {
+    constructor(fragmentStr) {
+        this.fragmentStr = fragmentStr;
         this.isParamFragment = fragmentStr[0] === ':';
     }
 
-    public matches(routeFragment: RouteFragment): boolean {
+    matches(routeFragment) {
         if (this.isParamFragment || routeFragment.isParamFragment) {
             return true;
         }

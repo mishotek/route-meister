@@ -1,26 +1,21 @@
-import { NavigationTrigger } from '../navigation-trigger.interface';
 import { Observable } from '../../utils/observable/observable';
-import { NavigationLocation } from '../navigation-location.interface';
-import { Subscription } from '../../utils/observable/subscription';
 
-export class AnchorClickNavigationTrigger implements NavigationTrigger {
-    private clickObserver$: Observable<NavigationLocation>;
-
+export class AnchorClickNavigationTrigger {
     constructor() {
-        this.clickObserver$ = new Observable();
-        this.listenToClick();
+        this._clickObserver$ = new Observable();
+        this._listenToClick();
     }
 
-    subscribe(callback: any): Subscription {
-        return this.clickObserver$.subscribe(callback);
+    subscribe(callback) {
+        return this._clickObserver$.subscribe(callback);
     }
 
-    private listenToClick() {
-        window.document.addEventListener('click', this.onClick.bind(this));
+    _listenToClick() {
+        window.document.addEventListener('click', this._onClick.bind(this));
     }
 
     // Source Vaadin router click trigger
-    private onClick(event) {
+    _onClick(event) {
         // ignore the click if the default action is prevented
         if (event.defaultPrevented) {
             return;
@@ -76,7 +71,7 @@ export class AnchorClickNavigationTrigger implements NavigationTrigger {
 
         // ignore the click if the target is external to the app
         // In IE11 HTMLAnchorElement does not have the `origin` property
-        const origin = anchor.origin || this.getAnchorOrigin(anchor);
+        const origin = anchor.origin || this._getAnchorOrigin(anchor);
         if (origin !== window.location.origin) {
             return;
         }
@@ -84,10 +79,10 @@ export class AnchorClickNavigationTrigger implements NavigationTrigger {
         // if none of the above, convert the click into a navigation event
         const { pathname, search, hash } = anchor;
         event.preventDefault();
-        this.clickObserver$.next({ pathname, search, hash });
+        this._clickObserver$.next({ pathname, search, hash });
     }
 
-    private getAnchorOrigin(anchor) {
+    _getAnchorOrigin(anchor) {
         // IE11: on HTTP and HTTPS the default port is not included into
         // window.location.origin, so won't include it here either.
         const { port, protocol } = anchor;

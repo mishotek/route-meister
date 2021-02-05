@@ -1,7 +1,7 @@
 import resolve from '@rollup/plugin-node-resolve';
 import copy from 'rollup-plugin-copy';
-import minifyHTML from 'rollup-plugin-minify-html-literals';
-import { terser } from 'rollup-plugin-terser';
+// import minifyHTML from 'rollup-plugin-minify-html-literals';
+// import { terser } from 'rollup-plugin-terser';
 
 const config = {
     input: 'app/app-root.js',
@@ -10,7 +10,7 @@ const config = {
         format: 'es',
     },
     plugins: [
-        minifyHTML(),
+        // minifyHTML(),
         copy({
             targets: [
                 { src: 'node_modules/@webcomponents', dest: 'dist/node_modules' },
@@ -19,7 +19,7 @@ const config = {
             ],
         }),
         resolve(),
-        terser(),
+        // terser(),
     ],
     preserveEntrySignatures: false,
     watch: {},

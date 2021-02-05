@@ -1,24 +1,21 @@
 import NavigationObserver from './navigation-observer';
-import { NavigationLocation } from './navigation-location.interface';
-import { NavigationTrigger } from './navigation-trigger.interface';
-import { Subscription } from '../utils/observable/subscription';
 import { Observable } from '../utils/observable/observable';
 
-class TriggerMock implements NavigationTrigger {
-    private observable$: Observable<NavigationLocation> = new Observable<NavigationLocation>();
+class TriggerMock {
+    observable$ = new Observable();
 
-    subscribe(callback): Subscription {
+    subscribe(callback) {
         return this.observable$.subscribe(callback);
     }
 
-    next(location: NavigationLocation) {
+    next(location) {
         this.observable$.next(location);
     }
 }
 
 describe('Navigation Observer tests', () => {
     test('Observer emits initial value upon subscription', (done) => {
-        const location: NavigationLocation = {
+        const location = {
             pathname: 'pathname',
             search: 'search',
             hash: 'hash',
@@ -33,13 +30,13 @@ describe('Navigation Observer tests', () => {
     });
 
     test('Observer emits value when trigger emits', (done) => {
-        const location1: NavigationLocation = {
+        const location1 = {
             pathname: 'pathname1',
             search: 'search1',
             hash: 'hash1',
         };
 
-        const location2: NavigationLocation = {
+        const location2 = {
             pathname: 'pathname2',
             search: 'search2',
             hash: 'hash2',
@@ -57,13 +54,13 @@ describe('Navigation Observer tests', () => {
     });
 
     test('Observer shouldn\'t emit value after calling destroy', (done) => {
-        const location1: NavigationLocation = {
+        const location1 = {
             pathname: 'pathname1',
             search: 'search1',
             hash: 'hash1',
         };
 
-        const location2: NavigationLocation = {
+        const location2 = {
             pathname: 'pathname2',
             search: 'search2',
             hash: 'hash2',
@@ -82,7 +79,7 @@ describe('Navigation Observer tests', () => {
     });
 
     test('Should throw error if trying to subscribe after destroy', () => {
-        const location: NavigationLocation = {
+        const location = {
             pathname: 'pathname1',
             search: 'search1',
             hash: 'hash1',
