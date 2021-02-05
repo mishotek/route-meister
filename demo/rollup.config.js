@@ -16,6 +16,8 @@ const config = {
                 { src: 'node_modules/@webcomponents', dest: 'dist/node_modules' },
                 { src: 'app/main.css', dest: 'dist' },
                 { src: 'app/index.html', dest: 'dist' },
+                { src: 'app/favicon.ico', dest: 'dist' },
+                { src: 'app/assets/logo.png', dest: 'dist/assets/' },
             ],
         }),
         resolve(),
