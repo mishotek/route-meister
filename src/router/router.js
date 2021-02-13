@@ -19,16 +19,12 @@ export class Router {
     }
 
     _updateBrowserHistory(pathname, search, hash) {
-        // const historyShouldUpdate = window.location.pathname !== pathname
-        //     || window.location.search !== search
-        //     || window.location.hash !== hash;
+        const historyShouldUpdate = window.location.pathname !== pathname
+            || window.location.search !== search
+            || window.location.hash !== hash;
 
-        // if (historyShouldUpdate) {
-        //     const changeState = 'pushState';
-        //     window.history[changeState](null, document.title, pathname + search + hash);
-        // }
-
-        const changeState = 'pushState';
-        window.history[changeState](null, document.title, pathname + search + hash);
+        if (historyShouldUpdate) {
+            window.history.pushState(null, document.title, pathname + search + hash);
+        }
     }
 }

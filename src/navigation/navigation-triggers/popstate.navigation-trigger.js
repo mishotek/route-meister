@@ -11,7 +11,7 @@ export class PopstateNavigationTrigger {
     }
 
     _listenToPopstate() {
-        window.document.addEventListener('popstate', this._onPopstate.bind(this));
+        window.addEventListener('popstate', this._onPopstate.bind(this));
     }
 
     _onPopstate() {

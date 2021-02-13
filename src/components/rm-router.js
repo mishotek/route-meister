@@ -41,9 +41,16 @@ export class RmRouter extends HTMLElement {
         const { pathname } = navigationLocation;
         const routeElements = this._routeElements;
         const nextRouteElement = this._findNextRouteElement(routeElements, pathname);
+
+        if (!nextRouteElement) {
+            throw new Error(`No route found for pathname ${pathname}`);
+        }
+
         routeElements.forEach((routeElement) => {
             if (routeElement === nextRouteElement) {
-                routeElement.activate();
+                const route = this._routeElementToRoute(routeElement);
+                const params = route.extractParams(navigationLocation.pathname);
+                routeElement.activate(navigationLocation, params);
             } else {
                 routeElement.deactivate();
             }

@@ -45,7 +45,7 @@ export class RmRoute extends HTMLElement {
         return this.setAttribute('element', nodeName);
     }
 
-    activate() {
+    activate(navigationLocation, params) {
         const { element } = this;
         if (typeof element !== 'string') {
             throw new Error(`element attribute must be a nodeName of the element that will be rendered on navigation (for example app-home), but now is ${element}`);
@@ -53,7 +53,12 @@ export class RmRoute extends HTMLElement {
 
         if (!this._node) {
             this._node = document.createElement(element);
+            this._node.setAttribute('route-pattern', this.pattern);
             this.shadowRoot.appendChild(this._node);
+        }
+
+        if (typeof this._node.routeChangedCallback === 'function') {
+            this._node.routeChangedCallback(navigationLocation, params);
         }
 
         this._notifyActivation(this._node);
