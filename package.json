@@ -1,12 +1,13 @@
 {
   "name": "route-meister",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple, lightweight router written to be used with web components. Supports lazy loading.",
   "main": "index.js",
+  "files": ["public"],
   "scripts": {
     "test": "jest --collectCoverage",
     "test-watch": "jest --watchAll",
-    "prebuild": "rimraf dist/",
+    "prebuild": "rimraf public/",
     "build": "rollup -c"
   },
   "repository": {
